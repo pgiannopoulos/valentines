@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Love Letter to You 💌</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="vday.js" defer></script>
+    <style>
+
+        h1 {
+            user-select: none; /* Prevents text selection */
+            outline: none; /* Removes any focus outline */
+        }
+
+        .falling-heart {
+            position: fixed;
+            top: -50px;
+            opacity: 1;
+            animation: fall 5s linear forwards, sway 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes fall {
+            0% { top: -50px; opacity: 1; }
+            100% { top: 100vh; opacity: 0; }
+        }
+
+        @keyframes sway {
+            0% { transform: translateX(-15px); }
+            50% { transform: translateX(15px); }
+            100% { transform: translateX(-15px); }
+        }
+
+        /* Floating Button Effect */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Floating button */
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Apply fade-in effect */
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        /* Background Image */
+        body {
+            background: #A1B0DB; /* Fallback color */
+            background-image: url('lolipop.jpg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        /* Letter Background */
+        .letter-container {
+            backdrop-filter: blur(5px);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-900 flex flex-col items-center justify-center min-h-screen p-5">
+
+<!-- Header Section with Background -->
+<div class="bg-[#475889] bg-opacity-50 px-5 py-4 rounded-lg shadow-md fade-in mt-10">
+    <h1 class="text-5xl font-extrabold text-white drop-shadow-lg tracking-wide text-center">
+        HAPPY VALENTINE'S DAY
+    </h1>
+</div>
+
+
+<!-- Music Player Card -->
+<div class="bg-[#475889] shadow-lg rounded p-5 mb-6 w-96 text-center mt-28">
+    <div class="relative group">
+        <img class="w-full block rounded" src="heart.jpg" alt="Album Cover"/>
+
+        <div class="absolute bg-black rounded bg-opacity-0 group-hover:bg-opacity-60 w-full h-full top-0 flex items-center justify-center group-hover:opacity-100 transition">
+            <button id="playPauseButton"
+                    class="hover:scale-110 text-white opacity-0 transform translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 transition">
+
+                <!-- Play Icon (default visible) -->
+                <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                     class="bi bi-play-circle-fill" viewBox="0 0 16 16" style="display: block;">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
+                </svg>
+
+                <!-- Pause Icon (Initially Hidden) -->
+                <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                     class="bi bi-pause-circle-fill" viewBox="0 0 16 16" style="display: none;">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-3zm4 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-3z"/>
+                </svg>
+            </button>
+
+        </div>
+    </div>
+
+    <!-- Artist & Song Name -->
+    <div class="p-5">
+        <h3 class="text-white text-lg font-bold">You</h3>
+        <p class="text-gray-400 text-md">RY X, Hermanos Gutiérrez</p>
+    </div>
+</div>
+
+<!-- Hidden YouTube Music Player -->
+<iframe id="musicPlayer" class="hidden"
+        src="https://www.youtube.com/embed/DT0TRp63mpI?enablejsapi=1&loop=1&playlist=DT0TRp63mpI"
+        allow="autoplay"></iframe>
+</div>
+
+<!-- Button -->
+<button id="openHeartButton"
+        class="bg-[#475889] hover:bg-[#6a7aa8] text-white py-2 px-6 rounded-full text-lg font-semibold
+        transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg floating mt-4 flex items-center gap-2">
+    <img src="love-letter.png" alt="Love Letter Logo" class="w-6 h-6"/>
+   <span>Open My Heart</span>
+    <img src="love-letter.png" alt="Love Letter Logo" class="w-6 h-6"/>
+</button>
+
+<!-- Letter Pop-up -->
+<div id="letter" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+     onclick="closeLetter(event)">
+    <div class="relative w-11/12 max-w-2xl p-8 bg-[#8b93c8] border border-gray-300 rounded-lg shadow-xl scale-90 opacity-0 transform transition-all duration-500 ease-in-out"
+         onclick="event.stopPropagation();">
+
+        <!-- "X" Close Button -->
+        <button id="closeButton"
+                class="absolute top-4 right-4 text-[#475889] text-2xl font-bold transition hover:scale-125 hover:text-[#6a7aa8] cursor-pointer">
+            ✖
+        </button>
+
+        <h5 class="mb-4 text-3xl font-bold tracking-tight text-white text-center flex items-center justify-center gap-2">
+            <img src="emoji.png" alt="Heart Logo" class="w-8 h-8"/>
+            <span>A Special Note for You</span>
+            <img src="emoji.png" alt="Heart Logo" class="w-8 h-8"/>
+        </h5>
+
+        <p class="font-normal text-white text-lg">
+            Hey you,
+        </p>
+        <p class="text-lg text-white leading-relaxed">
+            Just a little note to remind you how much I appreciate you.
+            Through every challenge, every difficult moment, and every uncertainty, you've shown me what true strength and love look like.
+            The past couple of years haven't been easy, but if there's one thing I know for sure, it's that we will get through everything together.
+            You are not just my love—you are my home, my safe place, my future.
+            And soon, we’ll officially begin the next chapter, side by side, just as we always have.
+            No fancy words, just this:
+        </p>
+        <p class="text-lg font-bold italic text-white mt-4">
+        You're my favorite. Always.
+        </p>
+        <p class="font-bold text-[#293964] text-xl flex items-center justify-end gap-2">
+            - Fasolaki
+            <img src="kitty.png" alt="Heart Logo" class="w-12 h-12"/>
+        </p>
+
+    </div>
+</div>
+
+</body>
+</html>
